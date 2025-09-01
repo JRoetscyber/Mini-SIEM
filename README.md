@@ -104,8 +104,3 @@ Licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 *"Security doesn’t need to be heavy – sometimes lightweight is all you need."*
 
----
-
-🔥 That’s the **dark hacker-style version** — ASCII banner + cyber vibe.
-
-Do you want me to also **make a second “enterprise-style” version** (clean, corporate look) so you can choose depending on your audience?
