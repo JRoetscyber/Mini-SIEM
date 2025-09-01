@@ -2,11 +2,11 @@
 *A Minimal & Secure Security Information and Event Management System*  
 
 ```
-
-```
 ████████████████████████████████████████████████████████████
 █              L I G H T W E I G H T   S I E M             █
 ████████████████████████████████████████████████████████████
+
+```
 
 
 ````
