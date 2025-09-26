@@ -1,0 +1,88 @@
+# Mini-SIEM Configuration Example
+# Copy this file to config.yaml and modify as needed
+
+# System Configuration
+system:
+  name: "Mini-SIEM"
+  version: "1.0.0"
+  log_level: "INFO"
+  data_directory: "./data"
+  log_directory: "./logs"
+
+# Web Interface
+web:
+  host: "0.0.0.0"
+  port: 8080
+  debug: false
+  secret_key: "change-this-secret-key"
+
+# Data Collection
+collectors:
+  syslog:
+    enabled: true
+    port: 514
+    bind_address: "0.0.0.0"
+  
+  file_monitor:
+    enabled: true
+    paths:
+      - "/var/log/auth.log"
+      - "/var/log/apache2/access.log"
+  
+  windows_events:
+    enabled: false
+    channels:
+      - "Security"
+      - "System"
+      - "Application"
+
+# Storage Configuration
+storage:
+  backend: "file"  # Options: file, sqlite, postgresql
+  retention_days: 30
+  compression: true
+  
+  # Database settings (if using database backend)
+  database:
+    host: "localhost"
+    port: 5432
+    name: "mini_siem"
+    user: "siem_user"
+    password: "secure_password"
+
+# Analysis Rules
+analysis:
+  rules_directory: "./config/rules"
+  correlation_window: 300  # seconds
+  
+  # Threat Intelligence
+  threat_intel:
+    enabled: false
+    feeds:
+      - "https://example.com/threat-feed.json"
+
+# Alerting
+alerts:
+  enabled: true
+  suppression_window: 300  # seconds
+  
+  # Email notifications
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: "your-email@gmail.com"
+    password: "your-app-password"
+    recipients:
+      - "admin@company.com"
+  
+  # Webhook notifications
+  webhook:
+    enabled: false
+    url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+
+# Visualization
+visualization:
+  refresh_interval: 30  # seconds
+  max_events_display: 1000
+  timezone: "UTC"

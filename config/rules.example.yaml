@@ -1,0 +1,69 @@
+# Example Detection Rules for Mini-SIEM
+# These rules demonstrate different types of security detection patterns
+
+# Failed Login Attempts - Brute Force Detection
+- name: "Multiple Failed Logins"
+  type: "threshold"
+  description: "Detect potential brute force attacks"
+  severity: "high"
+  condition:
+    field: "event_type"
+    value: "failed_login"
+    threshold: 5
+    timeframe: 300  # 5 minutes
+    group_by: "source_ip"
+  action:
+    - alert
+    - block_ip
+
+# Suspicious File Access
+- name: "Sensitive File Access"
+  type: "pattern"
+  description: "Monitor access to sensitive files"
+  severity: "medium"
+  condition:
+    field: "file_path"
+    pattern: ".*(/etc/shadow|/etc/passwd|.*\\.key|.*\\.pem).*"
+  action:
+    - alert
+    - log_detailed
+
+# Unusual Network Traffic
+- name: "Large Data Transfer"
+  type: "anomaly"
+  description: "Detect unusually large data transfers"
+  severity: "medium"
+  condition:
+    field: "bytes_transferred"
+    threshold: 1000000000  # 1GB
+    timeframe: 3600  # 1 hour
+  action:
+    - alert
+
+# Malware Indicators
+- name: "Known Malware Hash"
+  type: "ioc"
+  description: "Detect files with known malware hashes"
+  severity: "critical"
+  condition:
+    field: "file_hash"
+    ioc_type: "md5"
+    feed: "malware_hashes"
+  action:
+    - alert
+    - quarantine
+
+# Administrative Privilege Escalation
+- name: "Privilege Escalation"
+  type: "correlation"
+  description: "Detect privilege escalation attempts"
+  severity: "high"
+  conditions:
+    - field: "user_role"
+      value: "standard"
+    - field: "action"
+      value: "privilege_grant"
+      within: 60  # seconds
+  action:
+    - alert
+    - notify_admin
